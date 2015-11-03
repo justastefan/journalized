@@ -1,3 +1,31 @@
-<h2 id="title">Welcome to Ember</h2>
+<div class="container">
 
-{{outlet}}
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">JOURNAL<sub>ized</sub></a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+        <ul class="nav navbar-nav">
+          <li class="active">{{#link-to 'index'}}Home <span class="sr-only">(current)</span>{{/link-to}}</li>
+          <li>{{#link-to 'entries'}}Journal{{/link-to}}</li>
+          <li>{{#link-to 'channels'}}Channels{{/link-to}}</li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>{{#link-to 'login'}}Logout{{/link-to}}</li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  {{outlet}}
+
+</div>
+

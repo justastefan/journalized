@@ -1,0 +1,27 @@
+/* @imports must appear at top of stylesheet to be valid CSS */
+@import 'bootstrap-sandstone.css';
+
+/* Any CSS rules must go *after* any @imports *//* Any CSS rules must go *after* any @imports */
+.loading-pane {
+  margin: 25px auto;
+}
+
+.loading-message {
+  text-align: center;
+  color: #aaa;
+}
+
+.spinner {
+  background: url('/shop/images/ajax-loader.gif') no-repeat;
+  height: 32px;
+  width: 32px;
+  margin: 0 auto;
+}
+
+img {
+	margin: 1px;
+}
+
+img.selected {
+	border: red solid 2px;
+}
