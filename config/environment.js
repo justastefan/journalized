@@ -16,15 +16,15 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    },
-    contentSecurityPolicy: {
-      'default-src': "'none'",
-      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
-      'font-src': "'self' data: fonts.googleapis.com http://fonts.gstatic.com",
-      'connect-src': "'self'",
-      'img-src': "'self' fonts.googleapis.com http://fonts.gstatic.com",
-      'style-src': "'self' 'unsafe-inline' fonts.googleapis.com",
-      'frame-src': "*"
+    // },
+    // contentSecurityPolicy: {
+    //   'default-src': "'none'",
+    //   'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
+    //   'font-src': "'self' data: fonts.googleapis.com http://fonts.gstatic.com",
+    //   'connect-src': "'self'",
+    //   'img-src': "'self' fonts.googleapis.com http://fonts.gstatic.com",
+    //   'style-src': "'self' 'unsafe-inline' fonts.googleapis.com",
+    //   'frame-src': "*"
     }
   };
 
