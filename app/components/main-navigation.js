@@ -13,6 +13,7 @@ export default Ember.Component.extend({
       index: this.startsWith('index'),
       entries: this.startsWith('entries'),
       channels: this.startsWith('channels')
+      users: this.startsWith('users')
     };
     return result;
   })

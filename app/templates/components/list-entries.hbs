@@ -1,0 +1,22 @@
+{{#if title}}
+  <h3>{{title}}</h3>
+{{/if}}
+<div class="list-group">
+  {{#if list}}
+    {{#each list as |entry|}}
+      {{#link-to 'entries.show' entry class="list-group-item"}}
+        <span class="badge">2</span>
+        <h4 class="list-group-item-heading">
+          <span class="label label-success">{{moment-calendar entry.creationDate}}</span> {{entry.title}}
+          {{#if entry.public}}<small><span class="label label-warning">public</span></small>{{/if}}</h4>
+        <p class="list-group-item-text">{{entry.memo}}</p>
+      {{/link-to}}
+    {{else}}
+      <a href="#" class="list-group-item">
+        <p>Nothing found</p>
+      </a>
+    {{/each}}
+  {{else}}
+    <a href="#" class="list-group-item" name="loading-state">Loading</a>
+  {{/if}}
+</div>
