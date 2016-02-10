@@ -8,6 +8,9 @@ export default DS.Model.extend({
   public: DS.attr('boolean'),
   updated: DS.attr('date'),
   created: DS.attr('date'),
+  images: DS.hasMany('image'),
+  coverImage: DS.belongsTo('image'),
+
   isMine: Ember.computed('authManager.user', 'author', function() {
     if (this.get('authManager.user')) {
       return this.get('authManager.user.id') === this.get('author.id');

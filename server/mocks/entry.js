@@ -11,7 +11,9 @@ module.exports = function(app) {
       author: 1,
       public: false,
       updated: '2016-01-01T15:23:00',
-      created: '2016-01-01T15:23:00'
+      created: '2016-01-01T15:23:00',
+      images: [1,2,3],
+      coverImage: 1
     },
     {
       id: 2,
@@ -21,7 +23,8 @@ module.exports = function(app) {
       author: 2,
       public: true,
       updated: '2016-01-01T15:23:00',
-      created: '2016-01-01T15:23:00'
+      created: '2016-01-01T15:23:00',
+      coverImage: 3
     }
   ];
   var maxId = DATA.length+1;
@@ -31,15 +34,6 @@ module.exports = function(app) {
       'entries': DATA
     });
   });
-
-
-    // creationDate: DS.attr('date'),
-    // title: DS.attr('string'),
-    // memo: DS.attr('string'),
-    // author: DS.belongsTo('user'),
-    // public: DS.attr('boolean'),
-    // updated: DS.attr('date'),
-    // created: DS.attr('date')
 
   entryRouter.post('/', function(req, res) {
     // do validation
@@ -109,6 +103,50 @@ module.exports = function(app) {
     }
   });
 
-
   app.use('/api/entries', require('body-parser').json(), entryRouter);
+
+
+
+  var IMAGES = [
+    {
+      id: "1",
+      "name":"b232cf85cc2933d7bcea3505ff480af4",
+      "path":"https://drscdn.500px.org/photo/139584301/m%3D2048/",
+      "thumb":"http://drscdn.500px.org/photo/139584301/h%3D300/5950da8e5e900779789988c44eb63b43",
+    },
+    {
+      id: "2",
+      "name":"6e491cc147d913a918a8a87e4ed88c1c",
+      "path":"http://drscdn.500px.org/photo/119525409/m%3D2048/",
+      "thumb":"http://drscdn.500px.org/photo/119525409/h%3D300/098e78f98bcfc3b21edf9da9fe1cd97e",
+    },
+    {
+      id: "3",
+      "name":"59c9d4969319d42f9881949fd77c87c2",
+      "path":"http://drscdn.500px.org/photo/139715771/m%3D2048/",
+      "thumb":"http://drscdn.500px.org/photo/139715771/h%3D300/db35b9c893becffc8327aeda3276ddfd",
+    }
+  ];
+
+
+    var imageRouter = express.Router();
+    // token - authentication
+    imageRouter.get('/:id', function(req, res) {
+      var id = req.params.id;
+
+      var dataFiltered = IMAGES.filter(function(d) {
+        return id && (d.id.toString().indexOf(id) > -1);
+      });
+      if (dataFiltered.length >0) {
+        res.send({
+          'image': dataFiltered[0]
+        });
+      } else {
+        res.status(404).end();
+      }
+    });
+
+    app.use('/api/images', require('body-parser').json(), imageRouter);
+
+
 };

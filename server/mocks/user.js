@@ -110,16 +110,5 @@ module.exports = function(app) {
     }
   });
 
-    // The POST and PUT call will not contain a request body
-    // because the body-parser is not included by default.
-    // To use req.body, run:
-
-    //    npm install --save-dev body-parser
-
-    // After installing, you need to `use` the body-parser for
-    // this mock uncommenting the following line:
-    //
-    //app.use('/api/user', require('body-parser').json());
-
   app.use('/api/tokens', require('body-parser').json(), tokenRouter);
 };
