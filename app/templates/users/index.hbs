@@ -1,10 +1,8 @@
 <h1>List of users</h1>
 <p>Show all buddies of {{model.name}}.</p>
 
-{{#if model.buddies}}
-  {{#each model.buddies as |buddy|}}
-    <p >Buddy: {{#link-to "users.show" buddy}}{{buddy.name}}{{/link-to}}</p>
-  {{else}}
-    <p>You ain't know anybody, buddy.</p>
-  {{/each}}
-{{/if}}
+{{#each model as |buddy|}}
+  <p >Buddy: {{#link-to "users.show" buddy}}{{buddy.username}}{{/link-to}}</p>
+{{else}}
+  <p>You ain't know anybody, buddy.</p>
+{{/each}}

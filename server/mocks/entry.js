@@ -24,6 +24,7 @@ module.exports = function(app) {
       created: '2016-01-01T15:23:00'
     }
   ];
+  var maxId = DATA.length+1;
 
   entryRouter.get('/', function(req, res) {
     res.send({
@@ -31,8 +32,32 @@ module.exports = function(app) {
     });
   });
 
+
+    // creationDate: DS.attr('date'),
+    // title: DS.attr('string'),
+    // memo: DS.attr('string'),
+    // author: DS.belongsTo('user'),
+    // public: DS.attr('boolean'),
+    // updated: DS.attr('date'),
+    // created: DS.attr('date')
+
   entryRouter.post('/', function(req, res) {
-    res.status(201).end();
+    // do validation
+    var entry = req.body.entry;
+
+    var newEntry = {
+      id: maxId++,
+      title: entry.title,
+      memo: entry.memo,
+      creationDate: entry.creationDate,
+      public: entry.public,
+      // automatically set
+      author: 1,
+      updated: new Date(),
+      created: new Date()
+    }
+    DATA.push(newEntry);
+    res.status(201).send({"entry": newEntry});
   });
 
   entryRouter.get('/:id', function(req, res) {
@@ -51,26 +76,39 @@ module.exports = function(app) {
   });
 
   entryRouter.put('/:id', function(req, res) {
-    res.send({
-      'entry': {
-        id: req.params.id
-      }
+    var originalSize = DATA.length;
+    var removedEntry = DATA.filter(function(el) {
+      return el.id !== 1*req.params.id;
     });
+    if (removedEntry.length === originalSize) {
+      res.status(404).end();
+    } else {
+      // add updated entry
+      var updatedEntry = req.body.entry;
+      updatedEntry.id = req.params.id*1;
+      updatedEntry.updated = new Date();
+
+      removedEntry.push(updatedEntry);
+      DATA = removedEntry;
+      res.send({
+        "entry": updatedEntry
+      });
+    }
   });
 
   entryRouter.delete('/:id', function(req, res) {
-    res.status(204).end();
+    var originalSize = DATA.length;
+    var removeEntry = DATA.filter(function(el) {
+      return el.id !== 1*req.params.id;
+    });
+    if (removeEntry.length === originalSize) {
+      res.status(404).end();
+    } else {
+      DATA = removeEntry;
+      res.status(204).end();
+    }
   });
 
-  // The POST and PUT call will not contain a request body
-  // because the body-parser is not included by default.
-  // To use req.body, run:
 
-  //    npm install --save-dev body-parser
-
-  // After installing, you need to `use` the body-parser for
-  // this mock uncommenting the following line:
-  //
-  //app.use('/api/entry', require('body-parser').json());
-  app.use('/api/entries', entryRouter);
+  app.use('/api/entries', require('body-parser').json(), entryRouter);
 };

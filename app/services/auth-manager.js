@@ -7,6 +7,7 @@ export default Ember.Service.extend({
   accessToken: null,
   attemptedTransition: null,
   rememberMe: false,
+  user: null,
 
   store: Ember.inject.service(),
 
@@ -20,15 +21,13 @@ export default Ember.Service.extend({
       //data: '{"page":{"slug":null,"name":"test","birth":null,"death":null,"location":null,"user":null}}'
     }).then((result) => {
       this.set('accessToken', result.access_token);
-      if (this.get('attemptedTransition')) {
-        console.log('redirect');
-        this.get('attemptedTransition').retry();
-      }
+      this.set('user', this.get('store').find('user', result.user_id));
     });
   },
 
   invalidate() {
     this.set('accessToken', null);
+    this.set('user', null);
   },
 
   isAuthenticated: Ember.computed.bool('accessToken'),

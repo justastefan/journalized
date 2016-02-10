@@ -39,10 +39,10 @@ module.exports = function(app) {
 
   userRouter.post('/', function(req, res) {
     // do validation
-
+    var user = req.body.user;
     var dataFiltered = DATA.filter(function(d) {
-      return d.username.toString().indexOf(req.body.username) > -1
-      || d.email.toString().indexOf(req.body.email) > -1;
+      return d.username.toString().indexOf(user.username) > -1
+      || d.email.toString().indexOf(user.email) > -1;
     });
 
     if (dataFiltered.length > 0) {
@@ -50,9 +50,9 @@ module.exports = function(app) {
     } else {
       var newUser = {
         id: maxId++,
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
+        username: user.username,
+        email: user.email,
+        password: user.password,
         // automatically set
         role: 'guest',
         buddies: []
@@ -92,7 +92,7 @@ module.exports = function(app) {
   app.use('/api/users', require('body-parser').json(), userRouter);
 
 
-  
+
 
   var tokenRouter = express.Router();
   // token - authentication

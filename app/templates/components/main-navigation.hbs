@@ -30,6 +30,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {{#if authManager.isAuthenticated}}
+          <li class="navbar-text">{{authManager.user.username}}</li>
           <li>{{#link-to 'logout'}}Logout{{/link-to}}</li>
         {{else}}
           <li>{{#link-to 'login'}}Login{{/link-to}}</li>

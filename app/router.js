@@ -10,6 +10,7 @@ Router.map(function() {
     this.route('new');
     this.route('show', {path: '/:id'}, function() {
       this.route('shares');
+      this.route('edit');
     });
   });
   this.route('channels');
