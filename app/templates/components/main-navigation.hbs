@@ -16,19 +16,24 @@
         {{#link-to 'index' href='false' tagName='li' active=isActive.index}}
       		{{#link-to 'index'}}Home{{/link-to}}
       	{{/link-to}}
-        {{#link-to 'entries' href='false' tagName='li' active=isActive.entries}}
-      		{{#link-to 'entries'}}Journal{{/link-to}}
-      	{{/link-to}}
-        {{#link-to 'channels' href='false' tagName='li' active=isActive.channels}}
-      		{{#link-to 'channels'}}Channels{{/link-to}}
-      	{{/link-to}}
-        {{#link-to 'users' href='false' tagName='li' active=isActive.users}}
-      		{{#link-to 'users'}}Buddies{{/link-to}}
-      	{{/link-to}}
-
+        {{#if authManager.isAuthenticated}}
+          {{#link-to 'entries' href='false' tagName='li' active=isActive.entries}}
+        		{{#link-to 'entries'}}Journal{{/link-to}}
+        	{{/link-to}}
+          {{#link-to 'channels' href='false' tagName='li' active=isActive.channels}}
+        		{{#link-to 'channels'}}Channels{{/link-to}}
+        	{{/link-to}}
+          {{#link-to 'users' href='false' tagName='li' active=isActive.users}}
+        		{{#link-to 'users'}}Buddies{{/link-to}}
+        	{{/link-to}}
+        {{/if}}
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>{{#link-to 'login'}}Logout{{/link-to}}</li>
+        {{#if authManager.isAuthenticated}}
+          <li>{{#link-to 'logout'}}Logout{{/link-to}}</li>
+        {{else}}
+          <li>{{#link-to 'login'}}Login{{/link-to}}</li>
+        {{/if}}
       </ul>
     </div>
   </div>

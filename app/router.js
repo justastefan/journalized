@@ -13,10 +13,13 @@ Router.map(function() {
     });
   });
   this.route('channels');
-  this.route('login');
+  this.route('login', function() {
+    this.route('register');
+  });
   this.route('users', function() {
     this.route('show', {path: '/:id'});
   });
+  this.route('logout');
 });
 
 export default Router;

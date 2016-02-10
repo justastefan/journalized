@@ -1,0 +1,52 @@
+import Ember from 'ember';
+
+export default Ember.Service.extend({
+
+  cookieMonster: Ember.inject.service(),
+
+  accessToken: null,
+  attemptedTransition: null,
+  rememberMe: false,
+
+  store: Ember.inject.service(),
+
+  authenticate(login, password) {
+    return Ember.$.ajax({
+      //dataType: 'json',
+      contentType: "application/json; charset=utf-8",
+      method: "POST",
+      url: "/api/tokens",
+      data: JSON.stringify({ username: login, password: password })
+      //data: '{"page":{"slug":null,"name":"test","birth":null,"death":null,"location":null,"user":null}}'
+    }).then((result) => {
+      this.set('accessToken', result.access_token);
+      if (this.get('attemptedTransition')) {
+        console.log('redirect');
+        this.get('attemptedTransition').retry();
+      }
+    });
+  },
+
+  invalidate() {
+    this.set('accessToken', null);
+  },
+
+  isAuthenticated: Ember.computed.bool('accessToken'),
+
+  init: function() {
+    this._super();
+    var accessToken = this.get('cookieMonster').eat('auth_token');
+    this.set('accessToken', accessToken);
+  },
+
+  accessTokenObserver: Ember.observer('accessToken', function() {
+    if (Ember.isEmpty(this.get('accessToken'))) {
+      this.get('cookieMonster').burn('auth_token');
+    } else if(this.get('rememberMe')) {
+      // set cookie only when "rememberMe" is true
+      var days = 10;
+      this.get('cookieMonster').bake('auth_token', this.get('accessToken'), days);
+    }
+  })
+
+});

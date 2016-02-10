@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   authManager: null,
   currentPath: null,
+  authManager: Ember.inject.service(),
 
   startsWith: function (prefix) {
     return this.get('currentPath').indexOf(prefix) === 0;
@@ -12,7 +13,7 @@ export default Ember.Component.extend({
     var result = {
       index: this.startsWith('index'),
       entries: this.startsWith('entries'),
-      channels: this.startsWith('channels')
+      channels: this.startsWith('channels'),
       users: this.startsWith('users')
     };
     return result;
