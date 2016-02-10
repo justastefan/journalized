@@ -11,7 +11,6 @@
   </div>
 {{/if}}
 <form class="form-horizontal" {{action "save" on="submit"}}>
-
 {{!--
   <div class="form-group">
     <label for="image" class="col-sm-2 control-label">Avatar</label>
@@ -44,26 +43,41 @@
       {{/each}}
     </div>
   </div>
-
   --}}
-
 
   <div class="form-group">
     <label for="input-creation-date" class="col-sm-2 control-label">Date</label>
-    <div class="col-sm-10">
-       {{input value=edit.creationDate class="form-control" id="input-creation-date" placeholder="Date"}}
+    <div class="col-sm-4">
+      {{bs-datetimepicker
+          date=edit.creationDate
+          updateDate=(action (mut edit.creationDate))
+          forceDateOutput=true
+          noIcon=true
+          id="input-creation-date"
+          placeholder="Date"}}
     </div>
   </div>
   <div class="form-group">
     <label for="input-title" class="col-sm-2 control-label">Title</label>
     <div class="col-sm-10">
-      {{input value=edit.title placeholder="" class="form-control" id="input-title"}}
+      {{input
+        value=edit.title
+        placeholder=""
+        class="form-control"
+        id="input-title"
+        placeholder="(Optional) Enter a short summary"
+      }}
     </div>
   </div>
   <div class="form-group">
     <label for="input-memo" class="col-sm-2 control-label">Memo</label>
     <div class="col-sm-10">
-      {{textarea value=edit.memo placeholder="Write down things that made you smile, your thoughts, ideas, inspirations." class="form-control" id="input-memo"}}
+      {{textarea
+        value=edit.memo
+        placeholder="Write down things that made you smile, your thoughts, ideas, inspirations."
+        rows="7"
+        class="form-control"
+        id="input-memo"}}
     </div>
   </div>
   <div class="form-group">
