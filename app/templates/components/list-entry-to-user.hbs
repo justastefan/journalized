@@ -3,12 +3,12 @@
 {{/if}}
 <div class="list-group">
   {{#if list.isFulfilled}}
-    {{#each list as |entryToUser|}}
-      {{#link-to 'entries.show' entryToUser.entry class="list-group-item"}}
+    {{#each list as |entry|}}
+      {{#link-to 'journal.show' entry class="list-group-item"}}
         <span class="badge">2</span>
         <h4 class="list-group-item-heading">
-          <span class="label label-success">{{moment-calendar entryToUser.entry.creationDate}}</span> {{entryToUser.entry.title}}</h4>
-        <p class="list-group-item-text">{{entryToUser.entry.memo}}</p>
+          <span class="label label-success">{{moment-calendar entry.entry.creationDate}}</span> {{entry.entry.title}}</h4>
+        <p class="list-group-item-text">{{entry.entry.memo}}</p>
       {{/link-to}}
     {{else}}
       <a href="#" class="list-group-item">

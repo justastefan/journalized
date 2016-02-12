@@ -6,25 +6,27 @@ module.exports = function(app) {
     {
       id: 1,
       creationDate: '2015-11-12',
+      coverImage: 1,
       title: 'Mountain climbing was so fun',
       memo: 'Me an Daniel spent the weekend in a place where man belong - the alps in europe. I remember us not walking for so long in a while. Fun part: Daniel had to pull me up that place I once taught him how to climb - times changed! I eventually share this post with Daniel.',
+      location: 'Germany>Alps',
       author: 1,
       public: false,
       updated: '2016-01-01T15:23:00',
       created: '2016-01-01T15:23:00',
-      images: [1,2,3],
-      coverImage: 1
+      images: [1,2,3]
     },
     {
       id: 2,
       creationDate: '1958-11-02',
+      coverImage: 3,
       title: 'Mom was born',
       memo: 'Unimaginable! No way this could happen today. But when mom was born - they didn´t go to a hospital but were stying at home. While it was snowing outside the only heat inside came from the ofen which was available only in the kitchen. I made this post public since it´s a long time ago and I want to know everybody about it. Haha',
+      location: 'On a Farm',
       author: 2,
       public: true,
       updated: '2016-01-01T15:23:00',
-      created: '2016-01-01T15:23:00',
-      coverImage: 3
+      created: '2016-01-01T15:23:00'
     }
   ];
   var maxId = DATA.length+1;
@@ -43,6 +45,7 @@ module.exports = function(app) {
       id: maxId++,
       title: entry.title,
       memo: entry.memo,
+      location: entry.location,
       creationDate: entry.creationDate,
       public: entry.public,
       // automatically set
@@ -148,5 +151,103 @@ module.exports = function(app) {
 
     app.use('/api/images', require('body-parser').json(), imageRouter);
 
+    var userEntryRouter = express.Router();
 
+    var USER_ENTRIES = [
+      {
+        id: 1,
+        entry: 1,
+        user: 1,
+
+        isAuthor: true,
+        tags: 'my custom tags',
+        status: 'approved',
+        rating: 5
+      },
+      {
+        id: 2,
+        entry: 2,
+        user: 1,
+
+        isAuthor: false,
+        tags: 'user 2 custom tags',
+        status: 'open',
+        rating: 4
+      }
+    ];
+
+    var maxUserEntryId = USER_ENTRIES.length+1;
+
+    userEntryRouter.get('/', function(req, res) {
+      var userId = req.query.userId;
+      var status = req.query.status;
+      var dataFiltered = [];
+      if (userId) {
+        dataFiltered = USER_ENTRIES.filter(function(d) {
+          return (d.user.toString() === userId) &&
+          (!status || d.status === status);
+        });
+      }
+
+      res.send({
+        'userEntries': dataFiltered
+      });
+    });
+
+    userEntryRouter.post('/', function(req, res) {
+      // do validation
+      var userEntry = req.body.userEntry;
+
+      var newUserEntry = {
+        id: maxUserEntryId++,
+        user: userEntry.user*1,
+        entry: userEntry.entry*1,
+        tags: userEntry.tags,
+        rating: userEntry.rating,
+        status: userEntry.status,
+        // should be determined by request
+        isAuthor: userEntry.isAuthor,
+        // automatically set
+        updated: new Date(),
+        created: new Date()
+      };
+      USER_ENTRIES.push(newUserEntry);
+      res.status(201).send({"userEntry": newUserEntry});
+    });
+
+    userEntryRouter.get('/:id', function(req, res) {
+      var id = req.params.id;
+
+      var dataFiltered = USER_ENTRIES.filter(function(d) {
+        return id && (d.id.toString().indexOf(id) > -1);
+      });
+      if (dataFiltered.length >0) {
+        res.send({
+          'userEntry': dataFiltered[0]
+        });
+      } else {
+        res.status(404).end();
+      }
+    });
+
+    userEntryRouter.put('/:id', function(req, res) {
+      var id = req.params.id;
+
+      var dataFiltered = USER_ENTRIES.filter(function(d) {
+        return id && (d.id.toString().indexOf(id) > -1);
+      });
+      if (dataFiltered.length >0) {
+        res.send({
+          'userEntry': dataFiltered[0]
+        });
+      } else {
+        res.status(404).end();
+      }
+    });
+
+    userEntryRouter.delete('/:id', function(req, res) {
+      res.status(204).end();
+    });
+
+    app.use('/api/userEntries', require('body-parser').json(), userEntryRouter);
 };

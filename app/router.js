@@ -6,7 +6,7 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('entries', function() {
+  this.route('journal', function() {
     this.route('new');
     this.route('show', {path: '/:id'}, function() {
       this.route('shares');

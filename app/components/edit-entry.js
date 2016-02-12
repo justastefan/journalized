@@ -1,26 +1,50 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  authManager: Ember.inject.service(),
   errorMessage: '',
   files: [],
 
-  edit: Ember.computed('model', function() {
-    var model = this.get('model');
-    if (model && Ember.typeOf(model.save) === 'function') {
+  editEntry: Ember.computed('model', function() {
+    var entry = this.get('model');
+    if (entry && Ember.typeOf(entry.save) === 'function') {
       return {
-        creationDate: this.get('model.creationDate'),
-        title: this.get('model.title'),
-        memo: this.get('model.memo'),
-        public: this.get('model.public'),
-        images: this.get('model.images'),
-        coverImage: this.get('model.coverImage')
+        creationDate: entry.get('entry.creationDate'),
+        title: entry.get('entry.title'),
+        memo: entry.get('entry.memo'),
+        public: entry.get('entry.public'),
+        images: entry.get('entry.images'),
+        coverImage: entry.get('entry.coverImage')
       };
     } else {
       return {
         creationDate: new Date(),
+        title: '',
+        memo: '',
+        location: '',
         public: false,
         images: [],
-        coverImage: null
+        coverImage: null,
+        author: this.get('authManager.user')
+      };
+    }
+  }),
+
+  editUserEntry: Ember.computed('model', function() {
+    var entry = this.get('model');
+    if (entry && Ember.typeOf(entry.save) === 'function') {
+      return {
+        tags: this.get('model.tags'),
+        rating: this.get('model.rating'),
+        status: this.get('model.status'),
+        isAuthor: this.get('model.isAuthor')
+      };
+    } else {
+      return {
+        tags: '',
+        rating: null,
+        isAuthor: true,
+        status: 'approved'
       };
     }
   }),
@@ -61,17 +85,41 @@ export default Ember.Component.extend({
       this.set('errorMessage','');
       var model = this.get('model');
       if (model && Ember.typeOf(model.save) === 'function') {
-        model.setProperties(this.get('edit'));
+        // model.setProperties(this.get('editEntry'));
+        // model.save();
+        this.set('errorMessage', 'Missing implementation');
+
       } else {
-        var json = this.get('edit');
-        model = this.get('store').createRecord('entry', json);
+        var json = this.get('editEntry');
+        var entry = this.get('store').createRecord('entry', json);
+        entry.save()
+        .then((entry) => {
+          var userEntryJson = this.get('editUserEntry');
+          userEntryJson.entry = entry;
+          userEntryJson.user = this.get('authManager.user');
+          var userEntry = this.get('store').createRecord('userEntry', userEntryJson);
+          return userEntry.save();
+        })
+        .then((savedUserEntry) => {
+          this.attrs.onSave(savedUserEntry);
+        })
+        .catch((error) => {
+            this.set('errorMessage', 'Failed to save');
+            console.log(error);
+        });
+        // model = this.get('store').createRecord('userEntry', {
+        //   entry: entry,
+        //   user: this.get('authManager.user'),
+        //   status: 'approved',
+        //   isAuthor: true
+        // });
       }
-      model.save().then((saved)=>{
-        this.attrs.onSave(saved);
-      }).catch((error)=>{
-        this.set('errorMessage', 'Failed to save');
-        console.log(error);
-      });
+      // model.save().then((saved)=>{
+      //   this.attrs.onSave(saved);
+      // }).catch((error)=>{
+      //   this.set('errorMessage', 'Failed to save');
+      //   console.log(error);
+      // });
     },
     delete() {
       var model = this.get('model');

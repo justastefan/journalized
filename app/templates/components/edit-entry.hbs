@@ -8,8 +8,8 @@
           <button class="btn btn-primary">⇧ Upload Cover Image</button>
         {{/x-file-input}}
 
-        {{#if edit.coverImage}}
-          <button class="btn btn-danger" {{action "deleteCoverImage" edit.coverImage}}>Delete</button>
+        {{#if editEntry.coverImage}}
+          <button class="btn btn-danger" {{action "deleteCoverImage" editEntry.coverImage}}>Delete</button>
           <a class="btn btn-link" {{action "cancelUpload"}}>Cancel</a>
         {{/if}}
 
@@ -34,7 +34,7 @@
 {{else}}
   <div class="row" {{action "showUpload"}}>
     <div class="col-lg-12">
-      <img src={{edit.coverImage.getSrc}} class="img-responsive">
+      <img src={{editEntry.coverImage.getSrc}} class="img-responsive">
     </div>
   </div>
 {{/if}}
@@ -84,43 +84,87 @@
   <div class="form-group">
     <label for="input-creation-date" class="col-lg-2 control-label">Date</label>
     <div class="col-lg-4">
-      {{bs-datetimepicker
-          date=edit.creationDate
-          updateDate=(action (mut edit.creationDate))
-          forceDateOutput=true
-          noIcon=true
-          id="input-creation-date"
-          placeholder="Date"}}
+      {{#if editUserEntry.isAuthor}}
+        {{bs-datetimepicker
+            date=editEntry.creationDate
+            updateDate=(action (mut editEntry.creationDate))
+            forceDateOutput=true
+            noIcon=true
+            id="input-creation-date"
+            placeholder="Date"}}
+      {{else}}
+        {{moment-format editEntry.creationDate}}
+      {{/if}}
     </div>
   </div>
   <div class="form-group">
     <label for="input-title" class="col-lg-2 control-label">Title</label>
     <div class="col-lg-10">
-      {{input
-        value=edit.title
-        placeholder=""
-        class="form-control"
-        id="input-title"
-        placeholder="(Optional) Enter a short summary"
-      }}
+      {{#if editUserEntry.isAuthor}}
+        {{input
+          value=editEntry.title
+          placeholder=""
+          class="form-control"
+          id="input-title"
+          placeholder="(Optional) Enter a short summary"
+        }}
+      {{else}}
+        {{editEntry.title}}
+      {{/if}}
     </div>
   </div>
   <div class="form-group">
     <label for="input-memo" class="col-lg-2 control-label">Memo</label>
     <div class="col-lg-10">
-      {{textarea
-        value=edit.memo
-        placeholder="Write down things that made you smile, your thoughts, ideas, inspirations."
-        rows="7"
+      {{#if editUserEntry.isAuthor}}
+        {{textarea
+          value=editEntry.memo
+          placeholder="Write down things that made you smile, your thoughts, ideas, inspirations."
+          rows="7"
+          class="form-control"
+          id="input-memo"}}
+        {{else}}
+          {{editEntry.memo}}
+        {{/if}}
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="input-location" class="col-lg-2 control-label">Location</label>
+    <div class="col-lg-10">
+      {{#if editUserEntry.isAuthor}}
+        {{input
+          value=editEntry.location
+          placeholder=""
+          class="form-control"
+          id="input-location"
+          placeholder="Where about is this happening"
+        }}
+      {{else}}
+        {{editEntry.location}}
+      {{/if}}
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="input-tags" class="col-lg-2 control-label">Tags</label>
+    <div class="col-lg-10">
+      {{input
+        value=editUserEntry.tags
+        placeholder=""
         class="form-control"
-        id="input-memo"}}
+        id="input-tags"
+        placeholder="Add tags"
+      }}
     </div>
   </div>
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
       <div class="checkbox">
         <label>
-          {{input type="checkbox" checked=edit.public}} Public
+          {{#if editUserEntry.isAuthor}}
+            {{input type="checkbox" checked=editEntry.public}} Public
+          {{else}}
+            {{#if editEntry.public}}public{{else}}private{{/if}}
+          {{/if}}
         </label>
       </div>
     </div>

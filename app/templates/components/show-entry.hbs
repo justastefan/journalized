@@ -1,8 +1,17 @@
+{{#if entry.isAuthor}}
+  <div class="alert alert-info">
+    <strong>Info!</strong> You're the author!
+  </div>
+{{else}}
+  <div class="alert alert-warning">
+    <strong>Info!</strong> NOT the author! Someone must have shared this with you.
+  </div>
+{{/if}}
 
-{{#if entry.coverImage}}
+{{#if entry.entry.coverImage}}
   <div class="row">
     <div class="col-lg-12">
-      <img src={{entry.coverImage.getSrc}} class="img-responsive">
+      <img src={{entry.entry.coverImage.getSrc}} class="img-responsive">
     </div>
   </div>
 {{/if}}
@@ -10,29 +19,33 @@
 <div class="row">
   <div class="col-lg-12">
     <h1 id="title"><span class="label label-success">
-      {{moment-calendar entry.creationDate}}</span> {{entry.title}}
-      {{#if entry.public}}<small><span class="label label-warning">public</span></small>{{/if}}
+      {{moment-calendar entry.entry.creationDate}}</span> {{entry.entry.title}}
+      {{#if entry.entry.public}}<small><span class="label label-warning">public</span></small>{{/if}}
     </h1>
-    <p>{{entry.memo}}</p>
+    <p>{{entry.entry.memo}}</p>
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12">
     <p>Tags:
+      {{#if entry.tags}}
+        <span class="label label-danger"><span class="glyphicon glyphicon-tag"></span> {{entry.tags}}</span>
+      {{/if}}
       <span class="label label-danger"><span class="glyphicon glyphicon-user"></span> Daniel</span>
-      <span class="label label-warning"><span class="glyphicon glyphicon-map-marker"></span>Alps</span>
-      <span class="label label-info"><span class="glyphicon glyphicon-tag"></span> Vacation</span>
-    	| <span class="glyphicon glyphicon-user"></span> {{#link-to "users.show" entry.author}}{{entry.author.username}}{{/link-to}}
-    	| <span class="glyphicon glyphicon-time"></span> {{moment-format entry.updated}}
-      | <span class="glyphicon glyphicon-share"></span> {{#link-to "entries.show.shares" entry}}Shares{{/link-to}}
-      | {{#link-to "entries.show.edit" entry}}edit{{/link-to}}
+      {{#if entry.entry.location}}
+        <span class="label label-warning"><span class="glyphicon glyphicon-map-marker"></span>{{entry.entry.location}}</span>
+      {{/if}}
+    	| <span class="glyphicon glyphicon-user"></span> {{#link-to "users.show" entry.entry.author}}{{entry.entry.author.username}}{{/link-to}}
+    	| <span class="glyphicon glyphicon-time"></span> {{moment-format entry.entry.updated}}
+      | <span class="glyphicon glyphicon-share"></span> {{#link-to "journal.show.shares" entry.entry}}Shares{{/link-to}}
+      | {{#link-to "journal.show.edit" entry}}edit{{/link-to}}
     </p>
   </div>
 </div>
 
-{{#if entry.images}}
+{{#if entry.entry.images}}
   <div class="row">
-    {{#each entry.images as |image|}}
+    {{#each entry.entry.images as |image|}}
       <div class="col-xs-3 text-center">
         <img class="img-thumbnail" alt="140x140" src={{image.thumb}} style="width: 140px; height: 140px;">
       </div>

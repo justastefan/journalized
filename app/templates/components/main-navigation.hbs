@@ -17,8 +17,8 @@
       		{{#link-to 'index'}}Home{{/link-to}}
       	{{/link-to}}
         {{#if authManager.isAuthenticated}}
-          {{#link-to 'entries' href='false' tagName='li' active=isActive.entries}}
-        		{{#link-to 'entries'}}Journal{{/link-to}}
+          {{#link-to 'journal' href='false' tagName='li' active=isActive.journal}}
+        		{{#link-to 'journal'}}Journal{{/link-to}}
         	{{/link-to}}
           {{#link-to 'channels' href='false' tagName='li' active=isActive.channels}}
         		{{#link-to 'channels'}}Channels{{/link-to}}

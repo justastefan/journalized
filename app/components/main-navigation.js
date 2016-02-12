@@ -12,7 +12,7 @@ export default Ember.Component.extend({
   isActive: Ember.computed('currentPath', function() {
     var result = {
       index: this.startsWith('index'),
-      entries: this.startsWith('entries'),
+      journal: this.startsWith('journal'),
       channels: this.startsWith('channels'),
       users: this.startsWith('users')
     };

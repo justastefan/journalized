@@ -1,20 +1,19 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
+  // set by author
+  coverImage: DS.belongsTo('image'),
   creationDate: DS.attr('date'),
   title: DS.attr('string'),
   memo: DS.attr('string'),
-  author: DS.belongsTo('user'),
-  public: DS.attr('boolean'),
-  updated: DS.attr('date'),
-  created: DS.attr('date'),
+  location: DS.attr('string'),
+  isPublic: DS.attr('boolean'),
+  
+  // todo: assign multipe images
   images: DS.hasMany('image'),
-  coverImage: DS.belongsTo('image'),
 
-  isMine: Ember.computed('authManager.user', 'author', function() {
-    if (this.get('authManager.user')) {
-      return this.get('authManager.user.id') === this.get('author.id');
-    }
-    return false;
-  }),
+  // automatically set
+  author: DS.belongsTo('user'),
+  updated: DS.attr('date'),
+  created: DS.attr('date')
 });

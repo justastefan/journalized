@@ -1,5 +1,8 @@
 import Ember from 'ember';
 
+/**
+ * TODO: Check is this service used? Remove
+ */
 export default Ember.Service.extend({
   store: Ember.inject.service(),
   actions: {
