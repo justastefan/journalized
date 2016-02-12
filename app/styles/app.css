@@ -2,26 +2,15 @@
 @import 'bootstrap-simplex.min.css';
 
 /* Any CSS rules must go *after* any @imports *//* Any CSS rules must go *after* any @imports */
-.loading-pane {
-  margin: 25px auto;
-}
 
-.loading-message {
-  text-align: center;
-  color: #aaa;
-}
-
-.spinner {
-  background: url('/images/ajax-loader.gif') no-repeat;
-  height: 32px;
-  width: 32px;
-  margin: 0 auto;
-}
-
-img {
-	margin: 1px;
-}
-
-img.selected {
-	border: red solid 2px;
+.image-preview {
+  border-radius: 3px;
+  height: 64px;
+  width: 64px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  background-color: #d3d3d3;
+  border: 1px solid #D3D3D3;
 }

@@ -1,9 +1,7 @@
 <div class="row">
   <div class="col-lg-12">
     {{edit-entry
-      title="Noteworthy"
       model=model
-      description="Write down things that made you smile, your thoughts, ideas, inspirations."
       onSave=(route-action "editSuccess")
       onDelete=(route-action "deleteSuccess")
       onCancel=(route-action "cancelEdit")

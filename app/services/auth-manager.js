@@ -4,12 +4,13 @@ export default Ember.Service.extend({
 
   cookieMonster: Ember.inject.service(),
 
+  store: Ember.inject.service(),
+
   accessToken: null,
   attemptedTransition: null,
   rememberMe: false,
   user: null,
 
-  store: Ember.inject.service(),
 
   authenticate(login, password) {
     return Ember.$.ajax({
@@ -46,6 +47,13 @@ export default Ember.Service.extend({
       var days = 10;
       this.get('cookieMonster').bake('auth_token', this.get('accessToken'), days);
     }
+  }),
+  ajaxHeaders: Ember.computed('accessToken', function() {
+    if (!Ember.isEmpty(this.get('accessToken'))) {
+      return {
+        "X-JOURNALIZED-TOKEN": `Bearer ${this.get('accessToken')}`
+      };
+    }
+    return {};
   })
-
 });

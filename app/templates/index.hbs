@@ -10,7 +10,7 @@
 
 <div class="row">
   <div class="col-lg-4 col-md-6">
-    {{list-entry-to-user title="Shared to You" entries=(route-action "latestEntryToUser")}}
+    {{list-entries title="My latest entries" entries=(route-action "latestEntries")}}
   </div>
 
 {{!--
@@ -29,11 +29,13 @@
 
      --}}
   <div class="col-lg-4 col-md-6">
-
-    {{list-entries title="My latest entries" entries=(route-action "latestEntries")}}
-
+    {{list-entry-to-user title="Shared to You" entries=(route-action "latestEntryToUser")}}
   </div>
+
+
+      {{!--
   <div class="col-lg-4 col-md-6">
+
   	<h3>Channel Activity</h3>
     <div class="list-group">
       <a href="#" class="list-group-item">
@@ -48,4 +50,5 @@
       </a>
     </div>
   </div>
+  --}}
 </div>
