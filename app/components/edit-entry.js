@@ -55,8 +55,8 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
 
   showUpload: false,
-  isShowUpload: Ember.computed('edit.coverImage', 'showUpload', function() {
-    if (!this.get('edit.coverImage')) {
+  isShowUpload: Ember.computed('editEntry.coverImage', 'showUpload', function() {
+    if (!this.get('editEntry.coverImage')) {
       return true;
     }
     if (this.get('showUpload')) {
@@ -73,7 +73,7 @@ export default Ember.Component.extend({
       this.set('showUpload', false);
     },
     deleteCoverImage() {
-      this.set('edit.coverImage', null);
+      this.set('editEntry.coverImage', null);
     },
     upload() {
       var files = this.get('files');
