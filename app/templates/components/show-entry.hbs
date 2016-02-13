@@ -28,10 +28,9 @@
 <div class="row">
   <div class="col-xs-12">
     <p>Tags:
-      {{#if entry.tags}}
-        <span class="label label-danger"><span class="glyphicon glyphicon-tag"></span> {{entry.tags}}</span>
-      {{/if}}
-      <span class="label label-danger"><span class="glyphicon glyphicon-user"></span> Daniel</span>
+      {{#each entry.tagList as |tag|}}
+        <span class="label label-danger"><span class="glyphicon glyphicon-tag"></span> {{tag}}</span>
+      {{/each}}
       {{#if entry.entry.location}}
         <span class="label label-warning"><span class="glyphicon glyphicon-map-marker"></span>{{entry.entry.location}}</span>
       {{/if}}

@@ -231,17 +231,23 @@ module.exports = function(app) {
     });
 
     userEntryRouter.put('/:id', function(req, res) {
-      var id = req.params.id;
-
-      var dataFiltered = USER_ENTRIES.filter(function(d) {
-        return id && (d.id.toString().indexOf(id) > -1);
+      var originalSize = USER_ENTRIES.length;
+      var removedEntry = USER_ENTRIES.filter(function(el) {
+        return el.id !== 1*req.params.id;
       });
-      if (dataFiltered.length >0) {
-        res.send({
-          'userEntry': dataFiltered[0]
-        });
-      } else {
+      if (removedEntry.length === originalSize) {
         res.status(404).end();
+      } else {
+        // add updated entry
+        var updatedEntry = req.body.userEntry;
+        updatedEntry.id = req.params.id*1;
+        updatedEntry.updated = new Date();
+
+        removedEntry.push(updatedEntry);
+        USER_ENTRIES = removedEntry;
+        res.send({
+          "userEntry": updatedEntry
+        });
       }
     });
 
