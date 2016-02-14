@@ -50,32 +50,22 @@ export default Ember.Component.extend({
       };
     }
   }),
-
+  isOpen: Ember.computed('editUserEntry.status', function() {
+    var status = this.get('editUserEntry.status');
+    return status && status.toString() === 'open';
+  }),
   title: '',
   store: Ember.inject.service(),
 
-  showUpload: false,
-  isShowUpload: Ember.computed('editEntry.coverImage', 'showUpload', function() {
-    if (!this.get('editEntry.coverImage')) {
-      return true;
-    }
-    if (this.get('showUpload')) {
-      return true;
-    }
-    return false;
-  }),
-
   actions: {
-    showUpload() {
-      this.set('showUpload', true);
+    doCancelUpload() {
+      this.set('files', null);
     },
-    cancelUpload() {
-      this.set('showUpload', false);
-    },
-    deleteCoverImage() {
+    doDeleteCoverImage() {
       this.set('editEntry.coverImage', null);
+      this.set('files', null);
     },
-    upload() {
+    doUpload() {
       var files = this.get('files');
       for(var i=0; i < files.length; i++) {
         console.log(files[i]);
@@ -83,7 +73,15 @@ export default Ember.Component.extend({
 
       this.set('showUpload', false);
     },
-    save() {
+    doApprove() {
+      this.set('editUserEntry.status', 'approved');
+      this.send('doSave');
+    },
+    doReject() {
+      this.set('editUserEntry.status', 'rejected');
+      this.send('doSave');
+    },
+    doSave() {
       this.set('errorMessage','');
       var model = this.get('model');
       if (model && Ember.typeOf(model.save) === 'function') {
@@ -142,15 +140,6 @@ export default Ember.Component.extend({
       //   this.set('errorMessage', 'Failed to save');
       //   console.log(error);
       // });
-    },
-    delete() {
-      var model = this.get('model');
-      model.destroyRecord().then(()=>{
-        this.attrs.onDelete();
-      }).catch((error)=>{
-        this.set('errorMessage', 'Failed to delete');
-        console.log(error);
-      });
     },
     cancel() {
       this.attrs.onCancel();

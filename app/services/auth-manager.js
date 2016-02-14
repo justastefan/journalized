@@ -22,7 +22,11 @@ export default Ember.Service.extend({
       //data: '{"page":{"slug":null,"name":"test","birth":null,"death":null,"location":null,"user":null}}'
     }).then((result) => {
       this.set('accessToken', result.access_token);
-      this.set('user', this.get('store').find('user', result.user_id));
+      var promise = this.get('store').find('user', result.user_id);
+      promise.then((user)=>{
+        this.set('user',user);
+      });
+      return promise;
     });
   },
 
@@ -51,7 +55,7 @@ export default Ember.Service.extend({
   ajaxHeaders: Ember.computed('accessToken', function() {
     if (!Ember.isEmpty(this.get('accessToken'))) {
       return {
-        "X-JOURNALIZED-TOKEN": `Bearer ${this.get('accessToken')}`
+        "X-JOURNALIZED-TOKEN": `${this.get('accessToken')}`
       };
     }
     return {};

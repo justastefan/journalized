@@ -14,6 +14,10 @@ export default Ember.Route.extend({
     latestOpenUserEntries() {
       // filter on 'isOpen'
       return this.get('store').query('userEntry', {userId: this.get('authManager.user.id'), status: 'open'});
+    },
+    latestRejectedUserEntries() {
+      // filter on 'isOpen'
+      return this.get('store').query('userEntry', {userId: this.get('authManager.user.id'), status: 'rejected'});
     }
   }
 });

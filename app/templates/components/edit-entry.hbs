@@ -1,42 +1,61 @@
-
-
-{{#if isShowUpload}}
+{{#if editEntry.coverImage}}
   <div class="row">
-    <div class="col-xs-12 text-center">
-      <div class="well">
-        {{#x-file-input multiple=true action=(action (mut files)) accept="image/gif,image/jpg,image/png"}}
-          <button class="btn btn-primary">⇧ Upload Cover Image</button>
-        {{/x-file-input}}
-
-        {{#if editEntry.coverImage}}
-          <button class="btn btn-danger" {{action "deleteCoverImage" editEntry.coverImage}}>Delete</button>
-          <a class="btn btn-link" {{action "cancelUpload"}}>Cancel</a>
-        {{/if}}
-
-        {{#each files as |file|}}
-          <div class="media">
-              <div class="media-left">
-                {{#x-object-url blob=file as |url|}}
-                  <div style="background-image: url({{url}})" class="media-object image-preview" alt="file preview"></div>
-                {{/x-object-url}}
-              </div>
-              <div class="media-body">
-                {{file-upload file=file}}
-              </div>
-          </div>
-        {{/each}}
-        {{#if files}}
-          <button class="btn btn-default" {{action "upload"}}>Upload</button>
-        {{/if}}
-      </div>
+    <div class="col-lg-12">
+      {{#if editUserEntry.isAuthor}}
+      {{#unless files}}
+          {{#x-file-input multiple=true action=(action (mut files)) accept="image/gif,image/jpg,image/png"}}
+            <img src={{editEntry.coverImage.getSrc}} class="img-responsive">
+          {{/x-file-input}}
+        {{else}}
+          {{#each files as |file|}}
+            <div class="media">
+                <div class="media-left">
+                  {{#x-object-url blob=file as |url|}}
+                    <div style="background-image: url({{url}})" class="media-object image-preview" alt="file preview"></div>
+                  {{/x-object-url}}
+                </div>
+                <div class="media-body">
+                  {{file-upload file=file}}
+                </div>
+            </div>
+          {{/each}}
+          <button class="btn btn-default" {{action "doUpload"}}>Upload</button>
+          <button class="btn btn-danger" {{action "doDeleteCoverImage"}}>Remove Cover Image</button>
+          <a class="btn btn-link" {{action "doCancelUpload"}}>Cancel</a>
+        {{/unless}}
+      {{else}}
+        <img src={{editEntry.coverImage.getSrc}} class="img-responsive">
+      {{/if}}
     </div>
   </div>
 {{else}}
-  <div class="row" {{action "showUpload"}}>
-    <div class="col-lg-12">
-      <img src={{editEntry.coverImage.getSrc}} class="img-responsive">
+  {{#if editUserEntry.isAuthor}}
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <div class="well">
+          {{#unless files}}
+            {{#x-file-input multiple=true action=(action (mut files)) accept="image/gif,image/jpg,image/png"}}
+              <button class="btn btn-primary">⇧ Upload Cover Image</button>
+            {{/x-file-input}}
+          {{else}}
+            {{#each files as |file|}}
+              <div class="media">
+                  <div class="media-left">
+                    {{#x-object-url blob=file as |url|}}
+                      <div style="background-image: url({{url}})" class="media-object image-preview" alt="file preview"></div>
+                    {{/x-object-url}}
+                  </div>
+                  <div class="media-body">
+                    {{file-upload file=file}}
+                  </div>
+              </div>
+            {{/each}}
+            <button class="btn btn-default" {{action "doUpload"}}>Upload</button>
+          {{/unless}}
+        </div>
+      </div>
     </div>
-  </div>
+  {{/if}}
 {{/if}}
 
 {{#if title}}
@@ -51,36 +70,7 @@
     {{errorMessage}}
   </div>
 {{/if}}
-<form class="form-horizontal" {{action "save" on="submit"}}>
-
-{{!--
-  <div class="form-group">
-    <label for="image" class="col-lg-2 control-label">Cover</label>
-    <div class="col-lg-10">
-      {{#x-file-input multiple=true action=(action (mut files)) accept="image/gif,image/jpg,image/png"}}
-        <button class="btn btn-primary">⇧ Choose Files</button>
-      {{/x-file-input}}
-
-      {{#each files as |file|}}
-        <div class="media">
-          {{#x-object-url blob=file as |url|}}
-            <div class="media-left">
-                <div style="background-image: url({{url}})" class="media-object image-preview" alt="file preview"></div>
-            </div>
-            <div class="media-body">
-              <h4 class="media-heading">{{file.name}}</h4>
-              <p>Type: {{file.type}}, size: {{file.size}}</p>
-            </div>
-          {{/x-object-url}}
-        </div>
-      {{/each}}
-      {{#if files}}
-        <button class="btn btn-default" {{action "upload"}}>Upload</button>
-      {{/if}}
-    </div>
-  </div>
---}}
-
+<form class="form-horizontal" {{action "doSave" on="submit"}}>
   <div class="form-group">
     <label for="input-creation-date" class="col-lg-2 control-label">Date</label>
     <div class="col-lg-4">
@@ -171,13 +161,19 @@
   </div>
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
-      {{#if model}}
+      {{#if model}}1
+        {{#if editUserEntry.isAuthor}}
         <button type="submit" class="btn btn-success">Save</button>
+        {{else}}
+          {{#if isOpen}}
+            <button class="btn btn-primary" {{action "doApprove"}}>Accept</button>
+            <button class="btn btn-danger" {{action "doReject"}}>Reject</button>
+          {{else}}
+            <button type="submit" class="btn btn-success">Save</button>
+          {{/if}}
+        {{/if}}
       {{else}}
         <button type="submit" class="btn btn-success">Create</button>
-      {{/if}}
-      {{#if model}}
-        <button class="btn btn-danger" {{action "delete"}}>Delete</button>
       {{/if}}
       <a class="btn btn-link" {{action "cancel"}}>Cancel</a>
     </div>
