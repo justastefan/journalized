@@ -48,14 +48,21 @@ export default Ember.Component.extend({
       this.set('progress', e.percent);
     }.bind(this));
 
-    var promise = uploader.upload(this.get('file'));
-    promise.then(function() {
+    var imageMeta = {
+      name: this.get('file.name'),
+      type: this.get('file.type'),
+      size: this.get('file.size')
+    };
+
+    var promise = uploader.upload(this.get('file'), imageMeta);
+    promise.then((image) => {
       this.set('progress', 100);
       this.set('success', true);
-    }.bind(this), function() {
+      this.attrs.onSuccess(image);
+    }, () => {
       this.set('progress', 0);
       this.set('failed', true);
-    }.bind(this));
+    });
 
   }).on('init')
 

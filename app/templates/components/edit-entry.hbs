@@ -15,7 +15,7 @@
                   {{/x-object-url}}
                 </div>
                 <div class="media-body">
-                  {{file-upload file=file}}
+                  {{file-upload file=file onSuccess=(action "setCoverImage")}}
                 </div>
             </div>
           {{/each}}

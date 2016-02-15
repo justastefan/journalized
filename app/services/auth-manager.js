@@ -13,7 +13,7 @@ export default Ember.Service.extend({
 
 
   authenticate(login, password) {
-    return Ember.$.ajax({
+    var promise = Ember.$.ajax({
       //dataType: 'json',
       contentType: "application/json; charset=utf-8",
       method: "POST",
@@ -22,12 +22,11 @@ export default Ember.Service.extend({
       //data: '{"page":{"slug":null,"name":"test","birth":null,"death":null,"location":null,"user":null}}'
     }).then((result) => {
       this.set('accessToken', result.access_token);
-      var promise = this.get('store').find('user', result.user_id);
-      promise.then((user)=>{
-        this.set('user',user);
-      });
-      return promise;
+      return this.get('store').find('user', result.user_id);
+    }).then((user)=>{
+      this.set('user',user);
     });
+    return promise;
   },
 
   invalidate() {

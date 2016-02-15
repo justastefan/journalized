@@ -3,12 +3,12 @@ import Ember from 'ember';
 
 export default DS.RESTAdapter.extend({
   namespace: 'api',
-  //host: 'https://api.example.com'
+  
   authManager: Ember.inject.service(),
 
   headers: Ember.computed('authManager.ajaxHeaders', function() {
     // inject authentication header if available
-  	this.get('authManager.ajaxHeaders');
+  	return this.get('authManager.ajaxHeaders');
   }),
 
   handleResponse(status) {
