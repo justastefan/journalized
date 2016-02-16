@@ -60,6 +60,7 @@ export default Ember.Component.extend({
   actions: {
     setCoverImage(image) {
       this.set('editEntry.coverImage', image);
+      this.set('files', null);
     },
     doCancelUpload() {
       this.set('files', null);

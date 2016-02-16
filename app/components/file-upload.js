@@ -3,6 +3,7 @@ import EmberUploader from '../utils/uploader';
 
 export default Ember.Component.extend({
   authManager: Ember.inject.service(),
+  store: Ember.inject.service(),
   url: '/api/images',
   file: null,
   progress: null,
@@ -55,10 +56,12 @@ export default Ember.Component.extend({
     };
 
     var promise = uploader.upload(this.get('file'), imageMeta);
-    promise.then((image) => {
+    promise.then((data) => {
       this.set('progress', 100);
       this.set('success', true);
-      this.attrs.onSuccess(image);
+      this.get('store').find('image', data.image.id).then((image)=>{
+        this.attrs.onSuccess(image);
+      });
     }, () => {
       this.set('progress', 0);
       this.set('failed', true);

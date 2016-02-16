@@ -130,6 +130,7 @@ module.exports = function(app) {
       "thumb":"http://drscdn.500px.org/photo/139715771/h%3D300/db35b9c893becffc8327aeda3276ddfd",
     }
   ];
+  var imageMaxId = IMAGES.length++;
 
 
     var imageRouter = express.Router();
@@ -147,6 +148,24 @@ module.exports = function(app) {
       } else {
         res.status(404).end();
       }
+    });
+
+    imageRouter.post('/', function(req, res) {
+      // do validation
+      var entry = req.body.image;
+
+      var newEntry = {
+        id: imageMaxId++,
+        "name":"3efed94637c50e0852b82a3c18228ce9",
+        "path":"http://drscdn.500px.org/photo/140470053/q%3D80_m%3D1500/",
+        "thumb":"http://drscdn.500px.org/photo/140470053/q%3D80_h%3D600/ecdc0bad1a79623543b41fd3eab1856b",
+        // automatically set
+        author: 1,
+        updated: new Date(),
+        created: new Date()
+      }
+      IMAGES.push(newEntry);
+      res.status(201).send({"image": newEntry});
     });
 
     app.use('/api/images', require('body-parser').json(), imageRouter);
