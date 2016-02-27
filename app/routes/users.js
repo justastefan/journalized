@@ -7,14 +7,14 @@ export default Ember.Route.extend(SecureRoute, {
     return this.get('store').findAll('user');
 
     // list only the buddies
-    var promise = this.get('store').find('user', 2)
-    .then((user)=>{
-      return user.get('buddies');
-    }).then((buddies)=>{
-      //debugger;
-      console.log('buddies: '+buddies.length);
-      return buddies;
-    });
-    return promise;
+    // var promise = this.get('store').find('user', 2)
+    // .then((user)=>{
+    //   return user.get('buddies');
+    // }).then((buddies)=>{
+    //   //debugger;
+    //   console.log('buddies: '+buddies.length);
+    //   return buddies;
+    // });
+    // return promise;
   }
 });

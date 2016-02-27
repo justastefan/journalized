@@ -35,7 +35,7 @@ export default Ember.Component.extend({
       this.set('errorMessage', '');
       var user = this.get('store').createRecord('user', this.getProperties('username','email','password'));
       user.save().then((savedUser) => {
-        this.attrs.onSuccess();
+        this.attrs.onSuccess(savedUser);
       }, (err) => {
         this.set('errorMessage', err.responseText);
       });

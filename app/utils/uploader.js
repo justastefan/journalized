@@ -29,9 +29,7 @@ export default Ember.Object.extend(Ember.Evented, {
     var data = this.setupFormData(files, extra);
     var url  = get(this, 'url');
     var type = get(this, 'type');
-    var self = this;
-
-    set(this, 'isUploading', true);
+    this.set('isUploading', true);
 
     return this.ajax(url, data, type);
   },

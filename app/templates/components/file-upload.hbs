@@ -3,8 +3,12 @@
 
 <p>Progress: {{progress}}</p>
 {{#if success}}
-  <p>Success</p>
+<div class="alert alert-success">
+  Image upload successful!
+</div>
 {{/if}}
 {{#if failed}}
-  <p>Failed</p>
+  <div class="alert alert-danger">
+    Image upload failed!
+  </div>
 {{/if}}

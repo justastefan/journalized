@@ -5,7 +5,7 @@ export default Ember.Route.extend({
   model() {
     return {
       authManager: this.get('authManager')
-    }
+    };
   }
 
 });

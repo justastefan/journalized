@@ -49,14 +49,14 @@ export default Ember.Component.extend({
       this.set('progress', e.percent);
     }.bind(this));
 
-    var imageMeta = {
-      name: this.get('file.name'),
-      type: this.get('file.type'),
-      size: this.get('file.size')
-    };
+    // var imageMeta = {
+    //   name: this.get('file.name'),
+    //   type: this.get('file.type'),
+    //   size: this.get('file.size')
+    // };
 
-    var promise = uploader.upload(this.get('file'), imageMeta);
-    promise.then((data) => {
+    uploader.upload(this.get('file'))
+    .then((data) => {
       this.set('progress', 100);
       this.set('success', true);
       this.get('store').find('image', data.image.id).then((image)=>{
@@ -66,7 +66,7 @@ export default Ember.Component.extend({
       this.set('progress', 0);
       this.set('failed', true);
     });
-
+// })
   }).on('init')
 
 });

@@ -1,0 +1,28 @@
+<h2>User Sharing</h2>
+  <h4>Shared to</h4>
+  <p>
+    {{#each sharedUsers as |user|}}
+      <span class="label label-danger" {{action "doUnshare" user}}><span class="glyphicon glyphicon-user"></span> {{user.username}}</span>
+    {{else}}
+    -
+    {{/each}}
+  </p>
+<h4>Not shared with</h4>
+<p>
+  {{#each unsharedUsers as |user|}}
+    <span class="label label-danger" {{action "doShare" user}}><span class="glyphicon glyphicon-user"></span> {{user.username}}</span>
+  {{else}}
+  -
+  {{/each}}
+</p>
+{{!--
+<h2>Channel Sharing</h2>
+<p>Inform a channel of your writing</p>
+<p>
+  <span class="label label-primary"><span class="glyphicon glyphicon-user"></span> Vacation Blog Channel</span>
+  <span class="label label-primary"><span class="glyphicon glyphicon-user"></span> Outdoor</span>
+</p>
+<h2>Link Sharing</h2>
+<p>Create a secret link an share (and share by mail)</p>
+<p><button class="btn btn-primary">Create Secret Link</button></p>
+--}}

@@ -34,9 +34,11 @@
       {{#if entry.entry.location}}
         <span class="label label-warning"><span class="glyphicon glyphicon-map-marker"></span>{{entry.entry.location}}</span>
       {{/if}}
-    	| <span class="glyphicon glyphicon-user"></span> {{#link-to "users.show" entry.entry.author}}{{entry.entry.author.username}}{{/link-to}}
+    	| <span class="glyphicon glyphicon-user"></span> {{#link-to "users.show" entry.entry.user}}{{entry.entry.user.username}}{{/link-to}}
     	| <span class="glyphicon glyphicon-time"></span> {{moment-format entry.entry.updated}}
-      | <span class="glyphicon glyphicon-share"></span> {{#link-to "journal.show.shares" entry.entry}}Shares{{/link-to}}
+      {{#if entry.isAuthor}}
+      | <span class="glyphicon glyphicon-share"></span> {{#link-to "journal.show.shares"}}Shares{{/link-to}}
+      {{/if}}
       | {{#link-to "journal.show.edit" entry}}edit{{/link-to}}
     </p>
   </div>

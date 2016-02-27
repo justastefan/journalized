@@ -16,7 +16,7 @@ export default Ember.Component.extend({
         public: entry.get('entry.public'),
         images: entry.get('entry.images'),
         coverImage: entry.get('entry.coverImage'),
-        author: entry.get('entry.author')
+        user: entry.get('entry.user')
       };
     } else {
       return {
@@ -27,7 +27,7 @@ export default Ember.Component.extend({
         public: false,
         images: [],
         coverImage: null,
-        author: this.get('authManager.user')
+        user: this.get('authManager.user')
       };
     }
   }),
@@ -56,7 +56,6 @@ export default Ember.Component.extend({
   }),
   title: '',
   store: Ember.inject.service(),
-
   actions: {
     setCoverImage(image) {
       this.set('editEntry.coverImage', image);
@@ -94,20 +93,27 @@ export default Ember.Component.extend({
         // this.set('errorMessage', 'Missing implementation');
         model.setProperties(this.get('editUserEntry'));
         model.save()
-        .then(()=>{
+        .then((savedEditUserEntry)=>{
           // only save the "entry" when you're the author
           if (model.get('isAuthor')) {
             var id = model.get('entry.id');
             var entryProperties = this.get('editEntry');
-            this.get('store').find('entry', id).then((entry)=> {
+            var promise = this.get('store').find('entry', id).then((entry)=> {
               entry.setProperties(entryProperties);
               return entry.save();
-            }).catch((error)=>{
-                this.set('errorMessage', 'Failed to save');
-                console.log(error);
+            });
+            return promise;
+          } else {
+            // noop  promise
+            return new Ember.RSVP.Promise(function(resolve, reject){
+              resolve(savedEditUserEntry);
             });
           }
-        }).catch((error)=>{
+        })
+        .then((savedUserEntry) => {
+          this.attrs.onSave(savedUserEntry);
+        })
+        .catch((error)=>{
             this.set('errorMessage', 'Failed to save');
             console.log(error);
         });
@@ -131,19 +137,7 @@ export default Ember.Component.extend({
             this.set('errorMessage', 'Failed to save');
             console.log(error);
         });
-        // model = this.get('store').createRecord('userEntry', {
-        //   entry: entry,
-        //   user: this.get('authManager.user'),
-        //   status: 'approved',
-        //   isAuthor: true
-        // });
       }
-      // model.save().then((saved)=>{
-      //   this.attrs.onSave(saved);
-      // }).catch((error)=>{
-      //   this.set('errorMessage', 'Failed to save');
-      //   console.log(error);
-      // });
     },
     cancel() {
       this.attrs.onCancel();

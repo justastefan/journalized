@@ -10,7 +10,7 @@ module.exports = function(app) {
       title: 'Mountain climbing was so fun',
       memo: 'Me an Daniel spent the weekend in a place where man belong - the alps in europe. I remember us not walking for so long in a while. Fun part: Daniel had to pull me up that place I once taught him how to climb - times changed! I eventually share this post with Daniel.',
       location: 'Germany>Alps',
-      author: 1,
+      user: 1,
       public: false,
       updated: '2016-01-01T15:23:00',
       created: '2016-01-01T15:23:00',
@@ -23,7 +23,7 @@ module.exports = function(app) {
       title: 'Mom was born',
       memo: 'Unimaginable! No way this could happen today. But when mom was born - they didn´t go to a hospital but were stying at home. While it was snowing outside the only heat inside came from the ofen which was available only in the kitchen. I made this post public since it´s a long time ago and I want to know everybody about it. Haha',
       location: 'On a Farm',
-      author: 2,
+      user: 2,
       public: true,
       updated: '2016-01-01T15:23:00',
       created: '2016-01-01T15:23:00'
@@ -49,7 +49,7 @@ module.exports = function(app) {
       creationDate: entry.creationDate,
       public: entry.public,
       // automatically set
-      author: 1,
+      user: 1,
       updated: new Date(),
       created: new Date()
     }
@@ -160,7 +160,7 @@ module.exports = function(app) {
         "path":"http://drscdn.500px.org/photo/140470053/q%3D80_m%3D1500/",
         "thumb":"http://drscdn.500px.org/photo/140470053/q%3D80_h%3D600/ecdc0bad1a79623543b41fd3eab1856b",
         // automatically set
-        author: 1,
+        user: 1,
         updated: new Date(),
         created: new Date()
       }
@@ -275,4 +275,124 @@ module.exports = function(app) {
     });
 
     app.use('/api/userEntries', require('body-parser').json(), userEntryRouter);
+
+
+
+    var userRouter = express.Router();
+
+    var USERS = [
+      {
+        id: 1,
+        username: 'jonson',
+        password: 'test',
+        email: 'j@ons.on',
+        role: 'admin',
+        buddies: [1,3]
+      },
+      {
+        id: 2,
+        username: 'josephine',
+        password: 'test',
+        email: 'jo@sephi.ne',
+        role: 'guest',
+        buddies: [1,3]
+      },
+      {
+        id: 3,
+        username: 'mr. x',
+        password: 'test',
+        email: 'm@r.x',
+        role: 'guest',
+        buddies: [2]
+      }
+    ];
+    var maxId = USERS.length+1;
+
+    userRouter.get('/', function(req, res) {
+      var dataFiltered = USERS;
+      if (req.query.entry) {
+        dataFiltered = USERS.filter(function(u) {
+          var foundUserEntries = USER_ENTRIES.filter(function(ue) {
+            return ue.id === u.id && ue.entry === req.query.entry;
+          });
+          return foundUserEntries.length > 0;
+        });
+      }
+
+      res.send({
+        'users': dataFiltered
+      });
+    });
+
+    userRouter.post('/', function(req, res) {
+      // do validation
+      var user = req.body.user;
+      var dataFiltered = USERS.filter(function(d) {
+        return d.username.toString().indexOf(user.username) > -1
+        || d.email.toString().indexOf(user.email) > -1;
+      });
+
+      if (dataFiltered.length > 0) {
+        res.status(400).send({ error: "user name or email already exists"});
+      } else {
+        var newUser = {
+          id: maxId++,
+          username: user.username,
+          email: user.email,
+          password: user.password,
+          // automatically set
+          role: 'guest',
+          buddies: []
+        }
+        USERS.push(newUser);
+        res.send({"user": newUser});
+      }
+    });
+
+    userRouter.get('/:id', function(req, res) {
+      var id = req.params.id;
+
+      var dataFiltered = USERS.filter(function(d) {
+        return id && (d.id.toString().indexOf(id) > -1);
+      });
+      if (dataFiltered.length >0) {
+        res.send({
+          'user': dataFiltered[0]
+        });
+      } else {
+        res.status(404).end();
+      }
+    });
+
+    userRouter.put('/:id', function(req, res) {
+      res.send({
+        'user': {
+          id: req.params.id
+        }
+      });
+    });
+
+    userRouter.delete('/:id', function(req, res) {
+      res.status(204).end();
+    });
+
+    app.use('/api/users', require('body-parser').json(), userRouter);
+
+    var tokenRouter = express.Router();
+    // token - authentication
+    tokenRouter.post('/', function(req, res) {
+      var dataFiltered = USERS.filter(function(d) {
+        // check for email or username
+        return (d.username.toString().trim().indexOf(req.body.username) > -1
+        || d.email.toString().trim().indexOf(req.body.username) > -1);
+      });
+
+      if (dataFiltered.length > 0) {
+        res.send({ user_id: dataFiltered[0].id, access_token: 'tokenvaluexyz' });
+      } else {
+        res.status(400).send({ error: "invalid username/password"});
+      }
+    });
+
+    app.use('/api/tokens', require('body-parser').json(), tokenRouter);
 };
