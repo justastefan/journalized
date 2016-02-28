@@ -54,6 +54,14 @@ export default Ember.Component.extend({
     var status = this.get('editUserEntry.status');
     return status && status.toString() === 'open';
   }),
+  isRejected: Ember.computed('editUserEntry.status', function() {
+    var status = this.get('editUserEntry.status');
+    return status && status.toString() === 'rejected';
+  }),
+  isAccepted: Ember.computed('editUserEntry.status', function() {
+    var status = this.get('editUserEntry.status');
+    return status && status.toString() === 'accepted';
+  }),
   title: '',
   store: Ember.inject.service(),
   actions: {

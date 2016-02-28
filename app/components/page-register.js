@@ -31,7 +31,7 @@ export default Ember.Component.extend({
   isValid: Ember.computed.and('isValidPassword','isValidUsername', 'isValidEMail'),
   isInvalid: Ember.computed.not('isValid'),
   actions: {
-    register() {alert('hi');
+    register() {
       this.set('errorMessage', '');
       var user = this.get('store').createRecord('user', this.getProperties('username','email','password'));
       user.save().then((savedUser) => {
