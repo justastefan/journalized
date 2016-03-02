@@ -26,6 +26,10 @@ module.exports = function(environment) {
     //   'img-src': "'self' fonts.googleapis.com http://fonts.gstatic.com",
     //   'style-src': "'self' 'unsafe-inline' fonts.googleapis.com",
     //   'frame-src': "*"
+    },
+    contentSecurityPolicy: {
+      'font-src': "'self' https://fonts.gstatic.com",
+      'style-src': "'self' https://fonts.googleapis.com"
     }
   };
 
