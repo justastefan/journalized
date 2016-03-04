@@ -11,14 +11,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{list-entry-to-user}}`);
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:"
-  this.render(hbs`
-    {{#list-entry-to-user}}
-      template block text
-    {{/list-entry-to-user}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.ok(this.$());
 });
