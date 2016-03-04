@@ -7,7 +7,7 @@
       {{#link-to 'journal.show' entry class="list-group-item"}}
         <h4 class="list-group-item-heading">
           <span class="label label-success">{{moment-calendar entry.entry.creationDate}}</span> {{entry.entry.title}}</h4>
-        <p class="list-group-item-text">{{entry.entry.memo}}</p>
+        <p class="list-group-item-text">{{expandLineBreaks entry.entry.memo}}</p>
       {{/link-to}}
     {{else}}
       <a href="#" class="list-group-item">

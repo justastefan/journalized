@@ -113,7 +113,7 @@ export default Ember.Component.extend({
             return promise;
           } else {
             // noop  promise
-            return new Ember.RSVP.Promise(function(resolve, reject){
+            return new Ember.RSVP.Promise(function(resolve/*, reject*/){
               resolve(savedEditUserEntry);
             });
           }

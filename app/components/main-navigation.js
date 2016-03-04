@@ -32,27 +32,7 @@ export default Ember.Component.extend({
                 toggle.trigger("click");
           }
         });
-      })
+      });
     }, 300);
-  }).on('didInsertElement'),
-
-  didRender() {
-    this._super(...arguments);
-    console.log('didRender()');
-  }
-
-  // didInsertElement: function() {
-  //   // Bootstrap collapsible navigation bar
-  //   Ember.$('.nav li a').on('click', function(){
-  //     Ember.run(function(){
-  //       var toggle = Ember.$('.navbar-toggle');
-  //       // Only click if toggle is visible and ...
-  //       if (toggle && toggle.is(':visible') &&
-  //           // ... menu item is not a dropdown toggle.
-  //           !Ember.$(this).hasClass('dropdown-toggle')) {
-  //             toggle.trigger("click");
-  //       }
-  //     });
-  //   });
-  // }
+  }).on('didInsertElement')
 });

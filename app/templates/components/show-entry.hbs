@@ -22,7 +22,7 @@
       {{moment-calendar entry.entry.creationDate}}</span> {{entry.entry.title}}
       {{#if entry.entry.public}}<small><span class="label label-warning">public</span></small>{{/if}}
     </h1>
-    <p>{{entry.entry.memo}}</p>
+    <p>{{expandLineBreaks entry.entry.memo}}</p>
   </div>
 </div>
 <div class="row">
