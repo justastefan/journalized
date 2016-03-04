@@ -34,7 +34,12 @@ export default Ember.Component.extend({
         });
       })
     }, 300);
-  }).on('didInsertElement')
+  }).on('didInsertElement'),
+
+  didRender() {
+    this._super(...arguments);
+    console.log('didRender()');
+  }
 
   // didInsertElement: function() {
   //   // Bootstrap collapsible navigation bar

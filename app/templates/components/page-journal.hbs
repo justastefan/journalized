@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-lg-12">
+    <ul class="media-list">
+    {{#if list.isFulfilled}}
+      {{#each list as |entry|}}
+        <li class="list-unstyled">
+          <sub style="color:darkred;text-transform: uppercase;">{{moment-format entry.entry.creationDate "MMMM Y"}}</sub>
+        </li>
+        <li class="media">
+          <div class="media-left text-center">
+            <small>{{moment-format entry.entry.creationDate "ddd"}}</small>
+            <p><strong>{{moment-format entry.entry.creationDate "D"}}.</strong></p>
+          </div>
+          <div class="media-body">
+            {{#if entry.entry.title}}
+              <h4 class="media-heading">{{entry.entry.title}}</h4>
+            {{/if}}
+            <p>{{entry.entry.memo}}</p>
+            <p>Tags:
+              {{#each entry.tagList as |tag|}}
+                <span class="label label-danger"><span class="glyphicon glyphicon-tag"></span> {{tag}}</span>
+              {{/each}}
+              {{#if entry.entry.location}}
+                <span class="label label-warning"><span class="glyphicon glyphicon-map-marker"></span>{{entry.entry.location}}</span>
+              {{/if}}
+            	| <span class="glyphicon glyphicon-user"></span> {{#link-to "users.show" entry.entry.user}}{{entry.entry.user.username}}{{/link-to}}
+              | <span class="glyphicon glyphicon-lock"></span> {{#if entry.entry.isPublic}}
+                  public
+                {{else}}
+                  private
+                {{/if}}
+              | <span class="glyphicon glyphicon-time"></span> {{moment-format entry.entry.updated}}
+              {{#if entry.isAuthor}}
+              | <span class="glyphicon glyphicon-share"></span> {{#link-to "journal.show.shares"}}Shares{{/link-to}}
+              {{/if}}
+              | {{#link-to "journal.show.edit" entry}}edit{{/link-to}}
+            </p>
+          </div>
+
+          {{#if entry.entry.coverImage}}
+            <div class="media-right">
+              <a href="#">
+                <img class="media-object" alt="140x140" style="width: 64px; height: 64px;" src={{entry.entry.coverImage.getSrc}}>
+              </a>
+            </div>
+          {{/if}}
+        </li>
+      {{else}}
+        <li class="list-unstyled">No entries</li>
+      {{/each}}
+    {{else}}
+      <li class="list-unstyled">Loading...</li>
+    {{/if}}
+    </ul>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <button class="btn btn-link btn-block">Load More</button>
+  </div>
+</div>
