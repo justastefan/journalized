@@ -6,5 +6,12 @@ export default Ember.Component.extend({
       return this.attrs.entries();
     }
     return [];
-  })
+  }),
+  actions: {
+    selectedUserEntry(entry) {
+      if (this.attrs.selected) {
+        this.attrs.selected(entry);
+      }
+    }
+  }
 });

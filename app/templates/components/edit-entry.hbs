@@ -160,4 +160,15 @@
       <a class="btn btn-link" {{action "cancel"}}>Cancel</a>
     </div>
   </div>
+    <div class="row">
+      {{#each entry.entry.images as |image|}}
+        <div class="col-xs-3 text-center">
+          <img class="img-thumbnail" alt="140x140" src={{image.thumb}} style="width: 140px; height: 140px;">
+        </div>
+      {{/each}}
+
+      <div class="col-xs-3 text-center">
+        Add Image
+      </div>
+    </div>
 </form>

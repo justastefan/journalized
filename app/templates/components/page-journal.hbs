@@ -15,7 +15,7 @@
             {{#if entry.entry.title}}
               <h4 class="media-heading">{{entry.entry.title}}</h4>
             {{/if}}
-            <p>{{expandLineBreaks entry.entry.memo}}!</p>
+            <p {{action "selectedUserEntry" entry}}>{{expandLineBreaks entry.entry.memo}}!</p>
             <p>Tags:
               {{#each entry.tagList as |tag|}}
                 <span class="label label-danger"><span class="glyphicon glyphicon-tag"></span> {{tag}}</span>
