@@ -6,24 +6,24 @@ module.exports = function(app) {
     {
       id: 1,
       creationDate: '2015-11-12',
-      coverImage: 1,
+      ownCoverImage_id: 1,
       title: 'Mountain climbing was so fun',
       memo: 'Me an Daniel spent the weekend in a place where man belong - the alps in europe. I remember us not walking for so long in a while. Fun part: Daniel had to pull me up that place I once taught him how to climb - times changed! I eventually share this post with Daniel.',
       location: 'Germany>Alps',
-      user: 1,
+      ownUser_id: 1,
       public: false,
       updated: '2016-01-01T15:23:00',
       created: '2016-01-01T15:23:00',
-      images: [1,2,3]
+      image_ids: [1,2,3]
     },
     {
       id: 2,
       creationDate: '1958-11-02',
-      coverImage: 3,
+      ownCoverImage_id: 3,
       title: 'Mom was born',
       memo: 'Unimaginable! No way this could happen today. But when mom was born - they didn´t go to a hospital but were stying at home. While it was snowing outside the only heat inside came from the ofen which was available only in the kitchen. I made this post public since it´s a long time ago and I want to know everybody about it. Haha',
       location: 'On a Farm',
-      user: 2,
+      ownUser_id: 2,
       public: true,
       updated: '2016-01-01T15:23:00',
       created: '2016-01-01T15:23:00'
@@ -49,7 +49,7 @@ module.exports = function(app) {
       creationDate: entry.creationDate,
       public: entry.public,
       // automatically set
-      user: 1,
+      ownUser_id: 1,
       updated: new Date(),
       created: new Date()
     }
@@ -160,7 +160,7 @@ module.exports = function(app) {
         "path":"http://drscdn.500px.org/photo/140470053/q%3D80_m%3D1500/",
         "thumb":"http://drscdn.500px.org/photo/140470053/q%3D80_h%3D600/ecdc0bad1a79623543b41fd3eab1856b",
         // automatically set
-        user: 1,
+        ownUser_id: 1,
         updated: new Date(),
         created: new Date()
       }
@@ -175,8 +175,8 @@ module.exports = function(app) {
     var USER_ENTRIES = [
       {
         id: 1,
-        entry: 1,
-        user: 1,
+        ownEntry_id: 1,
+        ownUser_id: 1,
 
         isAuthor: true,
         tags: 'my custom tags',
@@ -185,8 +185,8 @@ module.exports = function(app) {
       },
       {
         id: 2,
-        entry: 2,
-        user: 1,
+        ownEntry_id: 2,
+        ownUser_id: 1,
 
         isAuthor: false,
         tags: 'user 2 custom tags',
@@ -203,7 +203,7 @@ module.exports = function(app) {
       var dataFiltered = [];
       if (userId) {
         dataFiltered = USER_ENTRIES.filter(function(d) {
-          return (d.user.toString() === userId) &&
+          return (d.ownUser_id.toString() === userId) &&
           (!status || d.status === status);
         });
       }
@@ -219,8 +219,8 @@ module.exports = function(app) {
 
       var newUserEntry = {
         id: maxUserEntryId++,
-        user: userEntry.user*1,
-        entry: userEntry.entry*1,
+        ownUser_id: userEntry.user*1,
+        ownEntry_id: userEntry.entry*1,
         tags: userEntry.tags,
         rating: userEntry.rating,
         status: userEntry.status,
