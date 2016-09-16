@@ -2,7 +2,7 @@
 <p>Show all buddies of {{model.name}}.</p>
 
 {{#each model as |buddy|}}
-  <p >Buddy: {{#link-to "users.show" buddy}}{{buddy.username}}{{/link-to}}</p>
+  <p >Buddy: {{#link-to "users.show" buddy}}{{buddy.name}}{{/link-to}}</p>
 {{else}}
   <p>You ain't know anybody, buddy.</p>
 {{/each}}

@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 export default DS.RESTAdapter.extend({
   namespace: 'api',
-  
+  host: 'http://journalized.inmem.dev',
   authManager: Ember.inject.service(),
 
   headers: Ember.computed('authManager.ajaxHeaders', function() {

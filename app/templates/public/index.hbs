@@ -1,0 +1,14 @@
+<h1 class="text-center">Öffentliche Journale</h1>
+
+{{#each model as |entry|}}
+
+<h2>{{entry.name}}</h2>
+<p>{{entry.content}}</p>
+<p><strong>Journals:</strong>
+  {{#each entry.journalEntries as |journalEntry|}}
+    {{journalEntry.journalName}} (Status: {{journalEntry.status}})
+  {{else}}
+  -
+  {{/each}}
+</p>
+{{/each}}

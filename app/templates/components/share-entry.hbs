@@ -2,7 +2,7 @@
   <h4>Shared to</h4>
   <p>
     {{#each sharedUsers as |user|}}
-      <span class="label label-danger" {{action "doUnshare" user}}><span class="glyphicon glyphicon-user"></span> {{user.username}}</span>
+      <span class="label label-danger" {{action "doUnshare" user}}><span class="glyphicon glyphicon-user"></span> {{user.name}}</span>
     {{else}}
     -
     {{/each}}
@@ -10,7 +10,7 @@
 <h4>Not shared with</h4>
 <p>
   {{#each unsharedUsers as |user|}}
-    <span class="label label-danger" {{action "doShare" user}}><span class="glyphicon glyphicon-user"></span> {{user.username}}</span>
+    <span class="label label-danger" {{action "doShare" user}}><span class="glyphicon glyphicon-user"></span> {{user.name}}</span>
   {{else}}
   -
   {{/each}}

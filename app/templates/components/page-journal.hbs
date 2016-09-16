@@ -23,7 +23,7 @@
               {{#if entry.entry.location}}
                 <span class="label label-warning"><span class="glyphicon glyphicon-map-marker"></span>{{entry.entry.location}}</span>
               {{/if}}
-            	| <span class="glyphicon glyphicon-user"></span> {{#link-to "users.show" entry.entry.user}}{{entry.entry.user.username}}{{/link-to}}
+            	| <span class="glyphicon glyphicon-user"></span> {{#link-to "users.show" entry.entry.user}}{{entry.entry.user.name}}{{/link-to}}
               | <span class="glyphicon glyphicon-lock"></span> {{#if entry.entry.isPublic}}
                   public
                 {{else}}

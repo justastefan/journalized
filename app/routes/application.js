@@ -8,7 +8,7 @@ export default Ember.Route.extend({
   actions: {
     latestUserEntries() {
       // filter on 'isApproved'
-      console.log('user id'+this.get('authManager.user.username'));
+      console.log('user id'+this.get('authManager.user.name'));
       return this.get('store').query('userEntry', {userId: this.get('authManager.user.id'), status: 'approved'});
     },
     latestOpenUserEntries() {

@@ -1,19 +1,21 @@
-import DS from 'ember-data';
+import Model from 'ember-data/model';
+import attr from 'ember-data/attr';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 
-export default DS.Model.extend({
+export default Model.extend({
   // set by author
-  coverImage: DS.belongsTo('image'),
-  creationDate: DS.attr('date'),
-  title: DS.attr('string'),
-  memo: DS.attr('string'),
-  location: DS.attr('string'),
-  isPublic: DS.attr('boolean'),
+  happened: attr('date'),
+  name: attr('string'),
+  content: attr('string'),
+
+  journalEntries: hasMany('journalEntry', {
+    inverse: 'entry'
+  }),
 
   // todo: assign multipe images
-  images: DS.hasMany('image'),
+  images: hasMany('image'),
 
   // automatically set
-  user: DS.belongsTo('user'),
-  updated: DS.attr('date'),
-  created: DS.attr('date')
+  updated: attr('date'),
+  created: attr('date')
 });

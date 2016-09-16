@@ -3,11 +3,11 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   store: Ember.inject.service(),
   errorMessage: '',
-  username: 'mike',
+  name: 'mike',
   email: 'mik@test.de',
   password: '123',
-  isValidUsername: Ember.computed('username', function() {
-    if (Ember.isEmpty(this.get('username'))) {
+  isValidName: Ember.computed('name', function() {
+    if (Ember.isEmpty(this.get('name'))) {
       return false;
     }
     return true;
@@ -28,12 +28,12 @@ export default Ember.Component.extend({
     }
     return true;
   }),
-  isValid: Ember.computed.and('isValidPassword','isValidUsername', 'isValidEMail'),
+  isValid: Ember.computed.and('isValidPassword','isValidName', 'isValidEMail'),
   isInvalid: Ember.computed.not('isValid'),
   actions: {
     register() {
       this.set('errorMessage', '');
-      var user = this.get('store').createRecord('user', this.getProperties('username','email','password'));
+      var user = this.get('store').createRecord('user', this.getProperties('name','email','password'));
       user.save().then((savedUser) => {
         this.attrs.onSuccess(savedUser);
       }, (err) => {
