@@ -4,7 +4,7 @@ export default Ember.Route.extend({
   store: Ember.inject.service(),
   model() {
     //return this.get('store').query('journal', {'status': 'public'});
-    var promise =  this.get('store').query('entry', { filter: {status: 'public'}});
+    var promise =  this.get('store').query('entry', {status: 'public'});
     // promise.then((entries) => {
     //   entries.forEach((entry) => {
     //     entry.get('journalEntries').then((journalEntry) => {

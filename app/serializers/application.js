@@ -5,11 +5,11 @@ export default DS.RESTSerializer.extend({
     // key = key.decamelize();
     if (kind === "belongsTo") {
 	  // creates: "ownArticlePackage_id"
-      return 'own'+key.capitalize() + "_id";
-      // return key.singularize() + "_id";
+      // return 'own' + key.capitalize() + "_id";
+      return key.singularize() + "_id";
     } else if (kind === "hasMany") {
 	  // creates: "articlePackage_ids"
-	  return key.singularize()+'_ids';
+	    return key.singularize()+'_ids';
     } else {
 	  // creates "article_package"
       return key.decamelize();

@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-lg-12">
+    {{edit-journal
+      title="Tagebuch anlegen"
+      description="Wie soll Deine neue Sammlung von Erinnerungsstücken heißen?"
+      onSave=(route-action "createSuccess")
+      onCancel=(route-action "cancelCreate")
+    }}
+  </div>
+</div>

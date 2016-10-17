@@ -4,7 +4,12 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
-    'ember-cli-bootswatch': 'simplex'
+    // 'ember-cli-bootswatch': 'simplex',
+    // 'excludeFonts':true
+    'ember-cli-bootswatch': {
+      'theme': 'simplex',
+      'excludeFonts': true
+    }
   });
 
   // Use `app.import` to add additional libraries to the generated

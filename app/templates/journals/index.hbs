@@ -1,0 +1,29 @@
+
+
+<div class="list-group">
+  {{#link-to 'journals.new' class="btn btn-block btn-link" class="list-group-item list-group-success"}}
+    <h4 class="list-group-item-heading">Tagebuch erstellen</h4>
+    <p class="list-group-item-text">Neues Tagebuch anlegen für Deine Beiträge.</p>
+  {{/link-to}}
+
+{{#each model as |journalUser|}}
+
+  {{#with journalUser.journal as |journal|}}
+    {{#link-to 'journals.show' journal class="btn btn-block btn-link" class="list-group-item"}}
+      <h4 class="list-group-item-heading">{{journal.name}}<small>
+        - {{moment-from-now journal.updated}}
+          <span class="glyphicon glyphicon-heart" style="color:red"></span> 42
+        - {{#link-to 'journals.show.users' journal}}<span class="glyphicon glyphicon-user"></span> {{journalUser.status}}{{/link-to}}
+        | {{#link-to 'journals.show.edit' journal}}<span class="glyphicon glyphicon-pencil"></span> bearbeiten{{/link-to}}
+      </small></h4>
+      <p class="list-group-item-text"><strong>{{journal.status}}</strong> | {{journal.description}}</p>
+    {{/link-to}}
+  {{/with}}
+{{else}}
+  {{#link-to 'public' class="btn btn-block btn-link" class="list-group-item "}}
+    <h4 class="list-group-item-heading">Nichts gefunden</h4>
+    <p class="list-group-item-text">Journal anlegen</p>
+  {{/link-to}}
+
+{{/each}}
+</div>

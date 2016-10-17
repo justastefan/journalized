@@ -6,7 +6,14 @@
 <p>{{entry.content}}</p>
 <p><strong>Journals:</strong>
   {{#each entry.journalEntries as |journalEntry|}}
-    {{journalEntry.journalName}} (Status: {{journalEntry.status}})
+  {{#with journalEntry.journal as |journal|}}
+    {{journal.name}}!
+  {{/with}}
+    {{journalEntry.journal.name}} (Status: {{journalEntry.status}})
+
+    {{#each entry.users as |user|}}
+      {{#link-to 'users.show' user}}{{user.name}}{{/link-to}} |
+    {{/each}}
   {{else}}
   -
   {{/each}}

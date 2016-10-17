@@ -7,9 +7,15 @@
     {{#link-to 'login' class="btn btn-success"}}Login{{/link-to}}
     {{#link-to 'login.register' class="btn btn-primary"}}Registrieren{{/link-to}}
   </p>
-  <p>
-    {{#link-to 'public' class="btn btn-block btn-link"}}Öffentliche Tagebücher{{/link-to}}
-  </p>
+
+  <div class="list-group">
+    {{#link-to 'public' class="btn btn-block btn-link" class="list-group-item "}}
+      <h4 class="list-group-item-heading">Öffentliche Beiträge</h4>
+      <p class="list-group-item-text">Neueste Meinungen und Infos.</p>
+    {{/link-to}}
+  </div>
+
+
 </div>
 
 {{else}}
@@ -17,11 +23,12 @@
   <h1>Hi {{model.authManager.user.name}}!</h1>
   <p class="lead">This is your private journal.</p>
   <p>
-    {{#link-to 'login' class="btn btn-primary"}}Journal-Überblick{{/link-to}}
-    {{#link-to 'login.register' class="btn btn-success"}}Beiträge{{/link-to}}
+    {{#link-to 'journals' class="btn btn-primary"}}Journal-Überblick{{/link-to}}
   </p>
   <p>
     {{#link-to 'public' class="btn btn-block btn-link"}}Öffentliche Tagebücher{{/link-to}}
   </p>
+
+  
 </div>
 {{/unless}}

@@ -23,6 +23,13 @@ Router.map(function() {
   });
   this.route('logout');
   this.route('public', function() {});
+  this.route('journals', function() {
+    this.route('new');
+    this.route('show', {path: '/:id'}, function() {
+      this.route('users');
+      this.route('edit');
+    });
+  });
 });
 
 export default Router;

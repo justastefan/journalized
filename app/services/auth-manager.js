@@ -24,7 +24,6 @@ export default Ember.Service.extend({
     });
 
     var promise = new Ember.RSVP.Promise((resolve, reject) => {
-      console.log('hi');
       token.save().then((token) => {
         this.set('accessToken', token.get('id'));
         this.set('token', token);
@@ -33,7 +32,6 @@ export default Ember.Service.extend({
       }).then((user)=>{
          this.set('user',user);
          resolve(user);
-         console.log('hi',user);
       }).catch((error)=> {
         reject(error);
       });

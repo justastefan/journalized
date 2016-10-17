@@ -1,6 +1,6 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-import { belongsTo, hasMany } from 'ember-data/relationships';
+import { /*belongsTo,*/ hasMany } from 'ember-data/relationships';
 
 export default Model.extend({
   // set by author
@@ -12,8 +12,11 @@ export default Model.extend({
     inverse: 'entry'
   }),
 
-  // todo: assign multipe images
   images: hasMany('image'),
+
+  users: hasMany('user'),
+  // status
+  status: attr('string'),
 
   // automatically set
   updated: attr('date'),

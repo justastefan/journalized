@@ -4,9 +4,13 @@ import { belongsTo/*, hasMany*/ } from 'ember-data/relationships';
 
 export default Model.extend({
   name: attr('string'),
-  content: attr('string'),
+  description: attr('string'),
   status: attr('string'), // public|private
-  active: attr('boolean'),
+  active: attr('boolean', {defaultValue: true}),
+
+  // journalEntries: hasMany('journalEntry', {
+  //   inverse: 'journal'
+  // }),
 
   latestEntry: belongsTo('entry'), // latest entry with status = 'approved'
 

@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-lg-12">
+    {{edit-journal
+      title="Tagebuch editieren"
+      model=model
+      onSave=(route-action "editSuccess")
+      onCancel=(route-action "cancelEdit")
+    }}
+  </div>
+</div>
